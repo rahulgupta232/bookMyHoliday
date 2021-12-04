@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="846cc696-631e-419e-a5e3-a2b2ccb5c453" >
+		<http:listener-connection host="0.0.0.0" port="${http.port}" />
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_config_flights" doc:name="HTTP Request configuration" doc:id="badcf74b-f4e2-40e2-8183-ddb135b48741" >
+		<http:request-connection host="${flights.host}" port="${req.port}" />
+	</http:request-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="36fcca74-24f9-4399-ab34-88a9255b6185" file="config.yaml" />
+	<http:request-config name="HTTP_Request_config_hotels" doc:name="HTTP Request configuration" doc:id="be6befa9-3706-43fb-bf96-ee614cc95400" >
+		<http:request-connection host="${hotels.host}" port="${req.port}" />
+	</http:request-config>
+	<http:request-config name="HTTP_Request_config_cabs" doc:name="HTTP Request configuration" doc:id="0b2570da-7bb0-4704-a173-143e556a2248" >
+		<http:request-connection host="${cabs.host}" port="${req.port}" />
+	</http:request-config>
+	<api-gateway:autodiscovery apiId="17480560" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="d613697b-f156-49ef-a43d-73faf5c8441b" flowRef="bookmyholiday-main" />
+	<configuration doc:name="Configuration" doc:id="94ae623e-bed0-4f12-98fc-76e562d578ef" defaultErrorHandler-ref="globalError_Handler" />
+	<error-handler name="globalError_Handler" doc:id="676874ab-6229-4a86-9095-f0983d1c9b30" >
+		<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="33f24465-b16e-4382-9433-426ce074d507" type="ANY">
+			<ee:transform doc:name="error desc" doc:id="2e11807c-a1b8-45a2-b2be-ca885617da55" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	message: error.description
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+			<set-variable value="500" doc:name="httpStatus" doc:id="b5383231-7642-4c1f-bd97-d20030470c60" variableName="httpStatus"/>
+		</on-error-continue>
+	</error-handler>
+</mule>

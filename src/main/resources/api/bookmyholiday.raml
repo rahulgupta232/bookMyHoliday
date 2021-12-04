@@ -1,0 +1,127 @@
+#%RAML 1.0
+title: bookMyHoliday
+description: "This gives its customers a holistic experience of booking their holidays !!"
+
+traits:
+  auth: !include BasicAuth.raml
+
+types:
+  IndigoFlight: !include types/IndigoFlightType.raml
+  TajHotel: !include types/TajHotelType.raml
+  CabType: !include types/CabDataType.raml
+
+/flights:
+  description: Flights booking partner - INDIGO !!
+  get:
+    description: Retreive the list of all Flights
+    queryParameters:
+      source: 
+        required: true
+        minLength: 3
+        maxLength: 3
+        type: string     
+      dest:
+        required: true
+        minLength: 3
+        maxLength: 3
+        type: string
+      departureDate:
+        required: true
+        type: date-only
+      class?:
+        description: Choose Travel class
+        enum:
+          - economy
+          - premium
+          - business
+      nonStop?:
+        description: Filter Direct flights
+        enum:
+          - Non-Stop
+          - 1-Stop
+          - 2-Stop
+    responses:
+      200:
+        body:
+          application/json:
+            type: IndigoFlight[]
+            example: !include examples/flightsGetOutput.raml
+          
+  post:
+    is: [auth]
+    description: Book a Flight
+    body:
+      application/json:
+        example: !include examples/flightsPostInput.raml
+        
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include examples/flightsPostOutput.raml
+
+/hotels:
+  get:
+    description: Retrieve list of all hotels
+    queryParameters:
+      city:
+        required: true
+        type: string
+        minLength: 3
+        maxLength: 10
+      checkInDate?:
+        type: date-only
+      checkOutDate?:
+        type: date-only
+    responses:
+      200:
+        body:
+          application/json:
+            type: TajHotel[]
+            example: !include examples/hotelsGetOutput.raml
+  post:
+    is: [auth]
+    description: Book a Hotel
+    body:
+      application/json:
+        example: !include examples/hotelsPostInput.raml     
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include examples/hotelsPostOutput.raml
+
+/cabs:
+  get:
+    description: Retrieve list of all cabs
+    queryParameters:
+      source:
+        required: true
+        type: string
+        minLength: 3
+        maxLength: 3
+      dest:
+        required: true
+        type: string
+        minLength: 3
+        maxLength: 3
+      journeyDate:
+        required: true
+        type: date-only
+    responses:
+      200:
+        body:
+          application/json:
+            type: CabType[]
+            example: !include examples/cabsGetOutput.raml
+  post:
+    is: [auth]
+    description: Book a Cab
+    body:
+      application/json:
+        example: !include examples/cabsPostInput.raml      
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include examples/cabsPostOutput.raml

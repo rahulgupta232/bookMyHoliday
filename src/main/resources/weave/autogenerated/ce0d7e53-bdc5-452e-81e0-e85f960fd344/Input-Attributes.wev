@@ -1,0 +1,29 @@
+%dw 2.0
+
+type auto_ce0d7e53_bdc5_452e_81e0_e85f960fd344_Input_Attributes = {|
+  clientCertificate?: {|
+    publicKey?: {|  |}, 
+    "type"?: String, 
+    encoded?: Binary
+  |}, 
+  headers: {|  |}, 
+  listenerPath: String, 
+  method: String, 
+  queryParams: {|
+    source: String, 
+    dest: String, 
+    departureDate: String, 
+    class?: "premium" | "business" | "economy", 
+    nonStop?: "1-Stop" | "Non-Stop" | "2-Stop"
+  |}, 
+  queryString: String, 
+  relativePath: String, 
+  remoteAddress: String, 
+  requestPath: String, 
+  requestUri: String, 
+  scheme: String, 
+  uriParams: {|  |}, 
+  version: String, 
+  localAddress: String
+|}
+

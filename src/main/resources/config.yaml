@@ -1,0 +1,17 @@
+http:
+  port: "8081"
+  
+req:
+  port: "80"
+  
+flights:
+  host: "prc-bookmyflight-rah.us-e2.cloudhub.io"
+  path: "/api/flights"
+  
+hotels:
+  host: "prc-bookmyhotel.us-e2.cloudhub.io"
+  path: "/api/hotels"
+  
+cabs:
+  host: "sys-bookmycab.us-e2.cloudhub.io"
+  path: "/api/cabs"

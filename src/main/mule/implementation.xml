@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="GET_flights" doc:id="ce0d7e53-bdc5-452e-81e0-e85f960fd344" >
+		<http:request method="GET" doc:name="prc-GetFlights" doc:id="e0e0d2c8-0c09-49ae-a597-d6ce77e193e4" config-ref="HTTP_Request_config_flights" path="${flights.path}">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"source" : attributes.queryParams.source,
+	"departureDate" : attributes.queryParams.departureDate,
+	"dest" : attributes.queryParams.dest
+}]]]></http:query-params>
+			<http:response-validator >
+				<http:success-status-code-validator values="200,556,555" />
+			</http:response-validator>
+		</http:request>
+		<logger level="INFO" doc:name="Logger" doc:id="41fe33fb-10de-4954-b9fc-d4170edcbbab" message="Flow exp-GET/Flights completed"/>
+	</flow>
+	<flow name="POST_flight" doc:id="600fc3b8-e681-4384-a69b-b5f92fbb6a63" >
+		<http:request method="POST" doc:name="prc-PostFlight" doc:id="516d99eb-ec73-49eb-a29c-fa19becc0ac3" config-ref="HTTP_Request_config_flights" path="${flights.path}">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"client_secret" : "44ED472783d04891Ba1818f77f000BAE",
+	"Content-Type" : "application/json",
+	"client_id" : "6b410edd9376452cabfc5f2f388f4de0"
+}]]]></http:headers>
+			<http:response-validator >
+				<http:success-status-code-validator values="201,556,555" />
+			</http:response-validator>
+		</http:request>
+		<logger level="INFO" doc:name="Logger" doc:id="9a117d73-88dc-48f3-9c7d-b30871256a09" message="Flow exp-POST/Flight completed"/>
+	</flow>
+	<flow name="GET_hotels" doc:id="f57f770b-8956-4324-bf55-25882a371cc2" >
+		<http:request method="GET" doc:name="prc-GetHotels" doc:id="4da87c03-9b04-4473-b719-51f709a93413" config-ref="HTTP_Request_config_hotels" path="${hotels.path}">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"city" : attributes.queryParams.city
+}]]]></http:query-params>
+			<http:response-validator >
+				<http:success-status-code-validator values="200,556,555" />
+			</http:response-validator>
+		</http:request>
+		<logger level="INFO" doc:name="Logger" doc:id="f1eb30c4-c637-4f9e-96ca-e27dd82bb093" message="Flow exp-GET/Hotels completed"/>
+	</flow>
+	<flow name="POST_hotel" doc:id="09ab2e07-b3c8-43b9-bed4-c7b2c24ee8b4" >
+		<http:request method="POST" doc:name="prc-PostHotel" doc:id="ed135a2b-dd9a-4e4c-88df-b025509006b3" config-ref="HTTP_Request_config_hotels" path="${hotels.path}">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"client_secret" : "03DA01A7d3074bf0930A67b84fFdc6cA",
+	"Content-Type" : "application/json",
+	"client_id" : "46f720058aa04b15ac89c9c2d97aef20"
+}]]]></http:headers>
+			<http:response-validator >
+				<http:success-status-code-validator values="201,200,556,555" />
+			</http:response-validator>
+		</http:request>
+		<logger level="INFO" doc:name="Logger" doc:id="a603a6fd-5779-434a-9e3a-8d9fec103869" message="Flow exp-POST/Hotel completed"/>
+	</flow>
+	<flow name="GET_cabs" doc:id="c2772246-41dc-4f5c-b61c-d48cc79c1192" >
+		<http:request method="GET" doc:name="sys-GetCabs" doc:id="d9996c57-e63d-42ea-81e6-7f4d1f50fe64" config-ref="HTTP_Request_config_cabs" path="${cabs.path}">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"journeyDate" : attributes.queryParams.journeyDate,
+	"source" : attributes.queryParams.source,
+	"dest" : attributes.queryParams.dest
+}]]]></http:query-params>
+			<http:response-validator >
+				<http:success-status-code-validator values="200,556,555" />
+			</http:response-validator>
+		</http:request>
+		<logger level="INFO" doc:name="Logger" doc:id="5c0ec23d-1f05-4b14-991f-66432764ed76" message="Flow exp-GET/cabs completed"/>
+	</flow>
+	<flow name="POST_cab" doc:id="8deea338-25de-46c5-badc-47474f9be3ae" >
+		<http:request method="POST" doc:name="sys-PostCab" doc:id="d0fae834-b208-4277-827e-dd86d338949e" config-ref="HTTP_Request_config_cabs" path="${cabs.path}">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"client_secret" : "44ED472783d04891Ba1818f77f000BAE",
+	"Content-Type" : "application/json",
+	"client_id" : "6b410edd9376452cabfc5f2f388f4de0"
+}]]]></http:headers>
+			<http:response-validator >
+				<http:success-status-code-validator values="201,556,555" />
+			</http:response-validator>
+		</http:request>
+		<logger level="INFO" doc:name="Logger" doc:id="108e8a2b-b5fe-4993-8e6d-d355339fcfde" message="Flow exp-POST/Cab completed"/>
+	</flow>
+</mule>
