@@ -123,6 +123,78 @@
 			<munit-tools:assert-equals doc:name="Assert equals" doc:id="4cbea9e5-8b51-4833-b606-4ab552ba79b0" actual="#[vars.httpStatus]" expected="404"/>
 		</munit:validation>
 	</munit:test>
+	<munit:test name="bookmyholidayInterface-test-suite-bookmyholiday-mainTest3" doc:id="60d286a8-cb8e-4401-92a8-eaa93c09bd8f" description="Test" expectedErrorType="APIKIT:METHOD_NOT_ALLOWED">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="b14ba851-d07b-410d-b97a-ff7279473884" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="bookmyholiday-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:METHOD_NOT_ALLOWED" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to bookmyholiday-main" doc:id="cde2d301-605f-49dd-ac58-9370c017e214" name="bookmyholiday-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="8bd07ad4-21cc-44b0-bb58-1a4e7ecfc563" actual="#[vars.httpStatus]" expected="405"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="bookmyholidayInterface-test-suite-bookmyholiday-mainTest4" doc:id="97acce5f-2bbe-49f9-9780-922681c19bc5" description="Test" expectedErrorType="APIKIT:NOT_ACCEPTABLE">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="1b57778f-b199-4aa0-ba7e-f3710c7f6ab3" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="bookmyholiday-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_ACCEPTABLE" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to bookmyholiday-main" doc:id="977dce67-06b6-4552-ab5d-30e8ae1400c8" name="bookmyholiday-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="60cffde4-853d-43a7-bdf9-613613e6e0d1" actual="#[vars.httpStatus]" expected="406"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="bookmyholidayInterface-test-suite-bookmyholiday-mainTest5" doc:id="671f66d9-802b-49e0-9e11-c9902cc5656b" description="Test" expectedErrorType="APIKIT:UNSUPPORTED_MEDIA_TYPE">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="bd540a9e-a407-419e-9210-25b7c5fb2ffd" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="bookmyholiday-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:UNSUPPORTED_MEDIA_TYPE" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to bookmyholiday-main" doc:id="3af0c2b5-27a8-461b-8bc6-7096455947b4" name="bookmyholiday-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="179e9907-b7ff-4bcd-a076-a25aafacd1dd" actual="#[vars.httpStatus]" expected="415"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="bookmyholidayInterface-test-suite-bookmyholiday-mainTest6" doc:id="33cb5c9e-0425-43a7-9760-c635f2ebd093" description="Test" expectedErrorType="APIKIT:NOT_IMPLEMENTED">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="8746e752-3abe-48bd-a850-55ce894f2a0b" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="bookmyholiday-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_IMPLEMENTED" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to bookmyholiday-main" doc:id="74eae40c-db38-44ee-a0a6-8faccb92f99d" name="bookmyholiday-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="3a054208-72af-4f73-aa21-a58875f7ecb0" actual="#[vars.httpStatus]" expected="501"/>
+		</munit:validation>
+	</munit:test>
 
 
 </mule>
