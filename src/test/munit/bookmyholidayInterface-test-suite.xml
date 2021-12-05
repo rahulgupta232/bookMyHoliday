@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="bookmyholidayInterface-test-suite.xml" />
+	<munit:test name="bookmyholidayInterface-test-suite-bookmyholiday-mainTest" doc:id="67141662-f55f-489f-b00e-13a52c980564" description="Test" expectedErrorType="MULE:UNKNOWN">
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to bookmyholiday-main" doc:id="2bd880cd-7fa8-41d3-a02a-3db400a0fe23" name="bookmyholiday-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:verify-call doc:name="Verify call" doc:id="38b3dd2b-4dfd-4347-8651-3c271ff3570b" processor="apikit:router" atLeast="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="bookmyholiday-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="bookmyholidayInterface-test-suite-get:\cabs:bookmyholiday-configTest" doc:id="246153cb-a286-4a38-8128-0b2e3c1d2865" description="Test">
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="bb2f2aaf-53bf-43a6-871b-cbf022441472" >
+				<munit:attributes value="#[{ queryParams:&#10; {'source': 'DEL','dest':'BLR','journeyDate':'2021-12-26'}}]" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to get:\cabs:bookmyholiday-config" doc:id="ea1ec412-f702-46e6-a534-79a34c838583" name="get:\cabs:bookmyholiday-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="d41a270f-5ab9-4745-aa95-1fc513deb922" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="bookmyholidayInterface-test-suite-post:\cabs:application\json:bookmyholiday-configTest" doc:id="0036b8ab-d04a-46f8-9a85-f39c35ec4242" description="Test">
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="7ab12c9d-81bf-405d-9f4a-9893e2ed1bc1" >
+				<munit:payload value='{&#10;   "Rider Name": "Rahul Gupta",&#10;   "Email": "rahul.123@apisero.com",&#10;   "Provider": "Uber",&#10;   "Car Num": "DL-7A-4088",&#10;   "Source": "Delhi",&#10;   "Destination": "Mumbai",&#10;   "Journey Date": "2021-11-11",&#10;   "Departure Time": "08:00"&#10;}' />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to post:\cabs:application\json:bookmyholiday-config" doc:id="b506cb1c-1cde-4302-ac4f-03d721da7133" name="post:\cabs:application\json:bookmyholiday-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="d4f6311f-78e6-4ccb-8f59-bd74671a0f36" is="#[MunitTools::notNullValue()]" expression="#[payload]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="bookmyholidayInterface-test-suite-get:\flights:bookmyholiday-configTest" doc:id="0c0d10d4-787a-4507-bbba-7387d4a9a1fe" description="Test">
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="27c725a5-8e1c-439d-80aa-52062a54a03e" >
+				<munit:payload value="#[{ queryParams:&#10; {'source': 'DEL','dest':'BLR','departureDate':'2021-11-23'}}]" />
+				<munit:attributes value="#[{ queryParams:&#10; {'source': 'DEL','dest':'BLR','departureDate':'2021-11-23'}}]" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to get:\flights:bookmyholiday-config" doc:id="0244e7ad-6ab3-44e6-b805-3b875169377d" name="get:\flights:bookmyholiday-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="8d755e7f-dee9-4392-90ea-308b5742982a" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="bookmyholidayInterface-test-suite-post:\flights:application\json:bookmyholiday-configTest" doc:id="47a701d8-d45e-47d1-9b9d-2a8f7f8e5ac7" description="Test">
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="15ba4808-18f9-4f79-bb54-ca10ff9d4b8b" >
+				<munit:payload value='{&#10;   "Flight ID": "6E 7746",&#10;   "Departure time": "08:00",&#10;   "Source": "DEL",&#10;   "Destination": "BLR",&#10;   "Departure date": "2021-11-22",&#10;   "NoOfPassengers": 2,&#10;   "PassengerName": [&#10;      "Kush Daga",&#10;      "Rahul Gupta"&#10;   ],&#10;   "Email": "ku11123@apisero.com"&#10;}' />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to post:\flights:application\json:bookmyholiday-config" doc:id="d9004f29-80cb-4f91-9848-7d7d0045e6aa" name="post:\flights:application\json:bookmyholiday-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="77b910b2-bd14-442e-a3ac-ab21b0703fae" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="bookmyholidayInterface-test-suite-get:\hotels:bookmyholiday-configTest" doc:id="d82623ae-b93e-4e52-8222-2855332d66cd" description="Test">
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="8ea50d6e-1585-4c69-9c55-d0eb611fda1d" >
+				<munit:attributes value="#[{ queryParams:&#10; {'city':'Chennai'}}]" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to get:\hotels:bookmyholiday-config" doc:id="0dc939f3-fbe9-4d59-9fcb-15454b44db84" name="get:\hotels:bookmyholiday-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="2cfa098d-9a7a-4286-86fe-97f47f832574" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="bookmyholidayInterface-test-suite-post:\hotels:application\json:bookmyholiday-configTest" doc:id="a82455aa-86d2-49d7-abb8-c67c56c26698" description="Test">
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="57d6bda4-881e-42e0-9795-24a466fa19d5" >
+				<munit:payload value='{&#10;   "Hotel ID": "TJ 001",&#10;   "City": "Delhi",&#10;   "Check In Date": "2021-11-11",&#10;   "Check Out Date": "2021-11-12",&#10;   "NoOfGuests": 2,&#10;   "RoomType": "Deluxe",&#10;   "NoOfRooms": 1,&#10;   "GuestName": "Kush Daga, Rahul Gupta",&#10;   "Email": "rahul.3@apisero.com"&#10;}' />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to post:\hotels:application\json:bookmyholiday-config" doc:id="78289d1d-1aee-46e9-bd29-f5dd8d2a268e" name="post:\hotels:application\json:bookmyholiday-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="6fec29d1-598a-4ca3-b3ce-9acbd2789284" expression="#[payload]" is="#[MunitTools::notNullValue()]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="bookmyholidayInterface-test-suite-bookmyholiday-mainTest1" doc:id="d48140d2-e377-4c0a-ab17-02226d20c8aa" description="Test" expectedErrorType="APIKIT:BAD_REQUEST">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="d9abdef0-accd-4058-b918-afc56d146e7e" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="bookmyholiday-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:BAD_REQUEST" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to bookmyholiday-main" doc:id="12b664e0-ee91-4ece-a2a9-347ed4ec66a4" name="bookmyholiday-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="25f9b9e7-1417-41f1-9f9c-cc5ab0746cbf" actual="#[vars.httpStatus]" expected="400"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="bookmyholidayInterface-test-suite-bookmyholiday-mainTest2" doc:id="fbb1c37f-ab7d-4977-addc-c9bee89c5bd1" description="Test" expectedErrorType="APIKIT:NOT_FOUND">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="19ecadac-6f24-445d-8781-76dc833c4391" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="bookmyholiday-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:NOT_FOUND" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to bookmyholiday-main" doc:id="6ae494c7-e55a-4b2c-95ef-2ae00e4894fc" name="bookmyholiday-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="4cbea9e5-8b51-4833-b606-4ab552ba79b0" actual="#[vars.httpStatus]" expected="404"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>
